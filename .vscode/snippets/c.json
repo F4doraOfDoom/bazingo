@@ -1,0 +1,44 @@
+{
+	"File_Comment": {
+		"prefix": "filecomment",
+		"scope": "c",
+		"body": [
+			"/*",
+			" * BAZINGO - $TM_FILENAME",
+			" *",
+			" * ${0:TODO: Description}",
+			" *",
+			" * By @F4doraOfDoom and @Mr-M33533K5",
+			" * $CURRENT_DATE-$CURRENT_MONTH-$CURRENT_YEAR_SHORT",
+			" */"
+		],
+		"description": "Comment at the start of each file."
+	},
+	"Prototype_Comment": {
+		"prefix": "protocomment",
+		"scope": "c",
+		"body": [
+			"/*",
+			" * ${0:TODO: Description}",
+			" * Input:",
+			" * \t${1:none}",
+			" * Output:",
+			" * \t${2:none}",
+			" */"
+		],
+		"description": "Comment before function prototype."
+	},
+	"Function_Comment": {
+		"prefix": "funccomment",
+		"scope": "c",
+		"body": [
+			"/*",
+			" * Assuming:",
+			" * \tnone",
+			" * Algorithm:",
+			" * \t${1:TODO}",
+			" */"
+		],
+		"description": "Comment before function prototype."
+	}
+}
