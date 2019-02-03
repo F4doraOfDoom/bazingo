@@ -5,9 +5,9 @@
 # By @F4doraOfDoom and @Mr-M33533K5	
 # 20-12-18
 
-CC=gcc -g -Wall -ansi -pedantic
-SOURCES=$(wildcard *.c)
-OBJECTS=$(SOURCES:.c=.o)
+CC=g++ -g -Wall -ansi -pedantic
+SOURCES=$(wildcard *.cpp)
+OBJECTS=$(SOURCES:.cpp=.o)
 OUTPUT=out.txt
 TARGET=bazingo
 

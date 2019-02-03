@@ -2,7 +2,16 @@
 #define PARSER_H_
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
+#include <deque>
+#include <map>
+
+#include "Token/Token.h"
+#include "Token/Instruction/Operator.h"
+#include "Token/Instruction/Operators/Print.h"
+#include "Token/Types/Values/Integer.h"
 
 enum OPCODE
 {
@@ -16,12 +25,12 @@ enum OPCODE
     PRINT
 };
 
-class Token
-{
+// A map that helps translate head instructions to opcodes
+// std::map<std::string, OPCODE> opcode_map = {
+//   {"Print", PRINT}  
+// };
 
-};
-
-typedef bool (*OPERATOR)(Token Token);
+typedef Token OPERATOR;
 
 /*
     An instruction contains:
