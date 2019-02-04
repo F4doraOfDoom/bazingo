@@ -1,9 +1,6 @@
-#include <iostream>
-#include "../Token/Token.h"
+#ifndef PRINT_H_
+#define PRINT_H_
 
-bool print(Token* value, Token* arguments)
-{
-    std::cout << *value << std::endl;
+bool print(Token* value, Token* arguments);
 
-    return true;
-}
+#endif // PRINT_H_

@@ -11,6 +11,11 @@ int main()
         std::cout << ">>> ";
         std::getline(std::cin, user_input);
         std::vector<Instruction*> instructions = parse(user_input);
+
+        for (auto instruction : instructions)
+        {
+            instruction->function(instruction->arg1, instruction->arg2);
+        }
     }
 
     return 0;
