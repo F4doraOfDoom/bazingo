@@ -9,8 +9,7 @@
 #include <map>
 
 #include "Token/Token.h"
-#include "Token/Instruction/Operator.h"
-#include "Token/Instruction/Operators/Print.h"
+#include "Operators/print.h"
 #include "Token/Types/Values/Integer.h"
 
 enum OPCODE
@@ -26,11 +25,7 @@ enum OPCODE
 };
 
 // A map that helps translate head instructions to opcodes
-// std::map<std::string, OPCODE> opcode_map = {
-//   {"Print", PRINT}  
-// };
-
-typedef Token OPERATOR;
+extern std::map<std::string, OPCODE> opcode_map;
 
 /*
     An instruction contains:
@@ -42,10 +37,12 @@ typedef Token OPERATOR;
 */
 struct Instruction
 {
+    using OPERATOR = bool (*)(Token*, Token*); 
+    
     OPCODE opcode;
     OPERATOR function;
-    Token arg1;
-    Token arg2;
+    Token* arg1;
+    Token* arg2;
 };
 
 /*

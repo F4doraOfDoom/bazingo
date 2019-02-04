@@ -5,8 +5,10 @@
 # By @F4doraOfDoom and @Mr-M33533K5	
 # 20-12-18
 
-CC=g++ -g -Wall -ansi -pedantic
-SOURCES=$(wildcard *.cpp)
+rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
+CC=g++ -g -Wall -ansi -pedantic -std=c++17
+SOURCES=$(call rwildcard, ./, *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 OUTPUT=out.txt
 TARGET=bazingo
