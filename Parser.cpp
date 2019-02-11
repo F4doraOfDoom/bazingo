@@ -45,7 +45,7 @@ std::vector<Instruction*> parse(std::string line)
     switch (opcode_map[head_instruction])
     {
         case PRINT:
-            instructions.push_back(new Instruction(OPCODE::PRINT, print, Parse::print_args(stream)));
+            instructions.push_back(new Instruction(OPCODE::PRINT, print, print_args(stream)));
         break;
     }
 
