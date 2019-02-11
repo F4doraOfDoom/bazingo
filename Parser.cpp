@@ -1,5 +1,4 @@
 #include "Parser.h"
-#include <sstream>
 
 // Initialize the opcode_map
 std::map<std::string, OPCODE> opcode_map = {
@@ -21,12 +20,37 @@ Instruction::~Instruction()
 Instruction::ARGS print_args(std::stringstream& stream)
 {
     Instruction::ARGS args;
-    std::string temp = "";
-    int i = 1;
+    std::string line = "";
+    std::string first_char = "";
 
-    while (std::getline(stream, temp, ' '))
+    /*
+        Update: This doc is useless coz I fixed the bug
+        Docs:
+        To parse the tokens, we read them line by line, and then use the infer_type 
+        function to get a Token that corresponds to the type inferred in the token.
+        Since strings start with a quote, it is problematic to read tokens this way,
+        because if the string contains a space in it, we will get an error. Because 
+        of that, every time we read a token, we check its first character. If it is 
+        a quote, then we read from the stream until the next quote, and add it to the 
+        token. But, because the getline function doesn't include the delimiter, we read
+        another character, and check if its a quote. If not, it is not a valid string,
+        and an error should be thrown.
+    */
+    while (std::getline(stream, line, ' '))
     {
-        args.push_back(Integer(i++));
+        if (line[0] == '"')
+        {
+            std::string temp = "";
+
+            std::getline(stream, temp, ' ');
+            line += temp;
+        }
+
+        if (line.size() > 0)
+        {
+            std::cout << line;
+            args.push_back(infer_type(line));
+        }
     }
 
     return args;
@@ -52,3 +76,61 @@ std::vector<Instruction*> parse(std::string line)
     return instructions;
 }
 
+Token infer_type(std::string& obj)
+{
+    // A map of regex and the referring type
+    static const std::array<std::pair<std::regex, Type>, 2> regex_type_map = {{
+        {std::regex("^\"([^\"]*)\"$"), T_STRING},
+        {std::regex("^[0-9]+$"), T_INTEGER}
+    }};
+    Type obj_type = T_NULL;
+    std::smatch regex_match;
+
+    Trim::trim_all(obj);
+    
+    // Pass each regex to find a type
+    for (auto regex_pair : regex_type_map)
+    {
+        if (std::regex_search(obj, regex_match, regex_pair.first))
+        {
+            obj_type = regex_pair.second;
+            break;
+        }
+    }
+
+    switch (obj_type)
+    {
+        case T_STRING:
+            std::cout << "String" << std::endl;
+            return String(regex_match[0]);
+
+        case T_INTEGER:
+            std::cout << "Integer" << std::endl;
+            return Integer(std::stoi(regex_match[0]));
+
+        default:
+            std::cout << "Null" << std::endl;
+            return String("NULL");
+    }
+}
+
+namespace Trim
+{
+    void trim_left(std::string &s) 
+    {
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+                std::not1(std::ptr_fun<int, int>(std::isspace))));
+    }
+
+    void trim_right(std::string &s) 
+    {
+        s.erase(std::find_if(s.rbegin(), s.rend(),
+                std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+    }
+
+    void trim_all(std::string &s) 
+    {
+        trim_left(s);
+        trim_left(s);
+    }
+}

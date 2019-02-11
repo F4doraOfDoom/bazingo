@@ -1,10 +1,13 @@
 #ifndef PARSER_H_
 #define PARSER_H_
 
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <array>
+#include <regex>
 #include <deque>
 #include <map>
 
@@ -12,6 +15,14 @@
 #include "Token/Token.h"
 #include "Operators/print.h"
 #include "Token/Types/Values/Integer.h"
+#include "Token/Types/Values/String.h"
+
+enum Type : uint_least8_t
+{
+    T_STRING,
+    T_INTEGER,
+    T_NULL
+};
 
 // A map that helps translate head instructions to opcodes
 extern std::map<std::string, OPCODE> opcode_map;
@@ -27,7 +38,24 @@ namespace Parse
             Instruction::ARGS - A vector of tokens
     */
     Instruction::ARGS print_args(std::stringstream& stream);
+
+    Token* infer_type(std::string);
 }
+
+// Name space for string trimming functions
+namespace Trim
+{
+    // Removes trailing whitespace from the left of a string
+    void trim_left(std::string &s);
+
+    // Removes trailing whitespace from the right of a string
+    void trim_right(std::string &s);
+
+    // Removes all trailing whitespace from a string
+    void trim_all(std::string &s);
+}
+
+Token infer_type(std::string&);
 
 /*
     The point of the parser is to take a string of data, and turn that into an instruction.

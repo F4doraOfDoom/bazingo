@@ -4,7 +4,7 @@
 #include <vector>
 #include "Token/Token.h"
 
-enum OPCODE
+enum OPCODE : uint_least8_t
 {
     // Set a new const
     NSET_CONST,
