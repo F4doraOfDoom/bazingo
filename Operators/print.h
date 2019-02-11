@@ -1,6 +1,8 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-bool print(Token* value, Token* arguments);
+#include "../Instruction.h"
+
+bool print(Instruction::ARGS);
 
 #endif // PRINT_H_

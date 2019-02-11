@@ -14,7 +14,8 @@ int main()
 
         for (auto instruction : instructions)
         {
-            instruction->function(instruction->arg1, instruction->arg2);
+            instruction->function(instruction->args);
+            delete instruction;
         }
     }
 

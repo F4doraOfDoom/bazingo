@@ -1,22 +1,13 @@
 #include <iostream>
 #include "../Token/Token.h"
+#include "print.h"
 
-bool print(Token* value, Token* arguments)
+bool print(Instruction::ARGS args)
 {
-    if (arguments)
+    for (auto arg : args)
     {
-        // Maybe in the future we'll add arguments to the printing function
+        std::cout << arg;
     }
-
-    if (value)
-    {
-        std::cout << *value << std::endl;
-    }
-    else
-    {
-        std::cout << "NULL" << std::endl;
-    }
-    
 
     return true;
 }

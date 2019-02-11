@@ -8,42 +8,19 @@
 #include <deque>
 #include <map>
 
+#include "Instruction.h"
 #include "Token/Token.h"
 #include "Operators/print.h"
 #include "Token/Types/Values/Integer.h"
 
-enum OPCODE
-{
-    // Set a new const
-    NSET_CONST,
-    // Set a new variable
-    NSET_VAR,
-    // Change a new variable
-    CSET_VAR,
-    // Print
-    PRINT
-};
-
 // A map that helps translate head instructions to opcodes
 extern std::map<std::string, OPCODE> opcode_map;
 
-/*
-    An instruction contains:
-        OPCODE opcode - a code that represents what sort of operation that is
-        OPERATOR function - pointer to a function that does the instruction, and takes the tokens
-                        As an argument
-        Token arg1 - first argument
-        Token arg2 - second argument
-*/
-struct Instruction
+// Name space for different functions regarding parsing arguments for different operators
+namespace Parse
 {
-    using OPERATOR = bool (*)(Token*, Token*); 
-    
-    OPCODE opcode;
-    OPERATOR function;
-    Token* arg1;
-    Token* arg2;
-};
+    Instruction::ARGS print_args(std::stringstream& stream);
+}
 
 /*
     The point of the parser is to take a string of data, and turn that into an instruction.
