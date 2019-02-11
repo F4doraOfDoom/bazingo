@@ -19,6 +19,13 @@ extern std::map<std::string, OPCODE> opcode_map;
 // Name space for different functions regarding parsing arguments for different operators
 namespace Parse
 {
+    /*
+        This function parses the arguments for a string
+        Input:
+            std::stringstream& stream - stream of strings (to be parsed as tokens)
+        Output:
+            Instruction::ARGS - A vector of tokens
+    */
     Instruction::ARGS print_args(std::stringstream& stream);
 }
 
