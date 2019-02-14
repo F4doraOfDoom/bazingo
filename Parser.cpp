@@ -38,17 +38,31 @@ Instruction::ARGS print_args(std::stringstream& stream)
     */
     while (std::getline(stream, line, ' '))
     {
-        if (line[0] == '"')
+        if (line[0] == '"' && line.back() != '"')
         {
             std::string temp = "";
 
-            std::getline(stream, temp, ' ');
-            line += temp;
+            std::getline(stream, temp, '"');
+            line += ' ' + temp + '"';
+
+            /*
+                The user can do something like this: print "hello world
+                without closing the brackets. I think that we should treat that as a valid string,
+                and just close the entire sentence
+                so even if there is a variable called 'hello' or 'world', the command
+                print "hello world
+                will result in a string "hello world"
+            */
+            // if (temp.back() != '"')
+            // {
+            //     // Invalid quotes
+            //     std::cout << "Throw exception" << std::endl;
+            // }
         }
 
         if (line.size() > 0)
         {
-            std::cout << line;
+            //std::cout << line;
             args.push_back(infer_type(line));
         }
     }

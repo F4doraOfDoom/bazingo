@@ -27,4 +27,4 @@ out: $(TARGET)
 	-./bazingo 2>$(OUTPUT)
 	
 clean:
-	rm -f *.o
+	rm -rf *.o

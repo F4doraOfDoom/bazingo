@@ -9,5 +9,7 @@ bool print(Instruction::ARGS args)
         std::cout << arg;
     }
 
+    std::cout << std::endl;
+
     return true;
 }
