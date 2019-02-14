@@ -93,9 +93,10 @@ std::vector<Instruction*> parse(std::string line)
 Token infer_type(std::string& obj)
 {
     // A map of regex and the referring type
-    static const std::array<std::pair<std::regex, Type>, 2> regex_type_map = {{
+    static const std::array<std::pair<std::regex, Type>, 3> regex_type_map = {{
         {std::regex("^\"([^\"]*)\"$"), T_STRING},
-        {std::regex("^[0-9]+$"), T_INTEGER}
+        {std::regex("^[0-9]+$"), T_INTEGER},
+        {std::regex("^True$|^False$"), T_BOOLEAN}
     }};
     Type obj_type = T_NULL;
     std::smatch regex_match;
@@ -121,6 +122,10 @@ Token infer_type(std::string& obj)
         case T_INTEGER:
             std::cout << "Integer" << std::endl;
             return Integer(std::stoi(regex_match[0]));
+
+        case T_BOOLEAN:
+            std::cout << "Boolean" << std::endl;
+            return (obj == "True" ? Boolean(true) : Boolean(false));
 
         default:
             std::cout << "Null" << std::endl;
