@@ -1,5 +1,6 @@
 {
         "files.associations": {
+                "*.h": "c",
                 "stdio.h": "c",
                 "cctype": "cpp",
                 "clocale": "cpp",
@@ -42,6 +43,13 @@
                 "typeinfo": "cpp",
                 "utility": "cpp",
                 "algorithm": "cpp",
-                "bitset": "cpp"
+                "bitset": "cpp",
+                "strstream": "cpp",
+                "chrono": "cpp",
+                "numeric": "cpp",
+                "ratio": "cpp",
+                "thread": "cpp",
+                "cinttypes": "cpp",
+                "typeindex": "cpp"
         }
 }

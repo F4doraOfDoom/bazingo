@@ -6,7 +6,7 @@ bool print(Instruction::ARGS args)
 {
     for (auto arg : args)
     {
-        std::cout << arg;
+        std::cout << arg << std::endl;
     }
 
     return true;
