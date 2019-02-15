@@ -17,12 +17,14 @@
 #include "Token/Types/Values/Integer.h"
 #include "Token/Types/Values/String.h"
 #include "Token/Types/Values/Float.h"
+#include "Token/Types/Values/Boolean.h"
 
 enum Type : uint_least8_t
 {
     T_STRING,
     T_INTEGER,
     T_FLOAT,
+    T_BOOLEAN,
     T_NULL
 };
 

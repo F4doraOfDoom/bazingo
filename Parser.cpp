@@ -38,16 +38,31 @@ Instruction::ARGS print_args(std::stringstream& stream)
     */
     while (std::getline(stream, line, ' '))
     {
-        if (line[0] == '"')
+        if (line[0] == '"' && line.back() != '"')
         {
             std::string temp = "";
 
-            std::getline(stream, temp, ' ');
-            line += temp;
+            std::getline(stream, temp, '"');
+            line += ' ' + temp + '"';
+
+            /*
+                The user can do something like this: print "hello world
+                without closing the brackets. I think that we should treat that as a valid string,
+                and just close the entire sentence
+                so even if there is a variable called 'hello' or 'world', the command
+                print "hello world
+                will result in a string "hello world"
+            */
+            // if (temp.back() != '"')
+            // {
+            //     // Invalid quotes
+            //     std::cout << "Throw exception" << std::endl;
+            // }
         }
 
         if (line.size() > 0)
         {
+            //std::cout << line;
             args.push_back(infer_type(line));
         }
     }
@@ -81,7 +96,8 @@ Token infer_type(std::string& obj)
     static const std::array<std::pair<std::regex, Type>, 3> regex_type_map = {{
         {std::regex("^\"([^\"]*)\"$"), T_STRING},
         {std::regex("^[0-9]+$"), T_INTEGER},
-        {std::regex("^[0-9]+\.[0-9]+$"), T_FLOAT}
+        {std::regex("^[0-9]+\.[0-9]+$"), T_FLOAT},
+        {std::regex("^True$|^False$"), T_BOOLEAN}
     }};
     Type obj_type = T_NULL;
     std::smatch regex_match;
@@ -111,6 +127,9 @@ Token infer_type(std::string& obj)
         case T_FLOAT:
             std::cout << "Float " << std::endl;
             return Integer(std::stoi(regex_match[0]));
+        case T_BOOLEAN:
+            std::cout << "Boolean" << std::endl;
+            return (obj == "True" ? Boolean(true) : Boolean(false));
 
         default:
             std::cout << "Null" << std::endl;
@@ -118,23 +137,21 @@ Token infer_type(std::string& obj)
     }
 }
 
-namespace Trim
+
+void Trim::trim_left(std::string &s) 
 {
-    void trim_left(std::string &s) 
-    {
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-                std::not1(std::ptr_fun<int, int>(std::isspace))));
-    }
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+            std::not1(std::ptr_fun<int, int>(std::isspace))));
+}
 
-    void trim_right(std::string &s) 
-    {
-        s.erase(std::find_if(s.rbegin(), s.rend(),
-                std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-    }
+void Trim::trim_right(std::string &s) 
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(),
+            std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+}
 
-    void trim_all(std::string &s) 
-    {
-        trim_left(s);
-        trim_left(s);
-    }
+void Trim::trim_all(std::string &s) 
+{
+    trim_left(s);
+    trim_left(s);
 }
