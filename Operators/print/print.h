@@ -1,7 +1,9 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-#include "../Instruction.h"
+#include <iostream>
+#include "../../Token/Token.h"
+#include "../../Instruction.h"
 
 /*
     This function represents the print operator

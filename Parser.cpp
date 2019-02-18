@@ -1,8 +1,9 @@
 #include "Parser.h"
 
 // Initialize the opcode_map
-std::map<std::string, OPCODE> opcode_map = {
-    {"print", OPCODE::PRINT}
+std::map<std::string, FUNCTION> opcode_map = {
+    {"print", FUNCTION::PRINT},
+    {"set", FUNCTION::SET}
 };
 
 // Declare program_variables locally
@@ -20,24 +21,19 @@ Instruction::~Instruction()
     // pass
 }
 
-Instruction::ARGS print_args(std::stringstream& stream)
+Instruction::ARGS tokenize(std::stringstream& stream)
 {
     Instruction::ARGS args;
     std::string line = "";
     std::string first_char = "";
 
     /*
-        Update: This doc is useless coz I fixed the bug
-        Docs:
-        To parse the tokens, we read them line by line, and then use the infer_type 
-        function to get a Token that corresponds to the type inferred in the token.
-        Since strings start with a quote, it is problematic to read tokens this way,
-        because if the string contains a space in it, we will get an error. Because 
-        of that, every time we read a token, we check its first character. If it is 
-        a quote, then we read from the stream until the next quote, and add it to the 
-        token. But, because the getline function doesn't include the delimiter, we read
-        another character, and check if its a quote. If not, it is not a valid string,
-        and an error should be thrown.
+        The user can do something like this: print "hello world
+        without closing the brackets. I think that we should treat that as a valid string,
+        and just close the entire sentence
+        so even if there is a variable called 'hello' or 'world', the command
+        print "hello world
+        will result in a string "hello world"
     */
     while (std::getline(stream, line, ' '))
     {
@@ -48,19 +44,6 @@ Instruction::ARGS print_args(std::stringstream& stream)
             std::getline(stream, temp, '"');
             line += ' ' + temp + '"';
 
-            /*
-                The user can do something like this: print "hello world
-                without closing the brackets. I think that we should treat that as a valid string,
-                and just close the entire sentence
-                so even if there is a variable called 'hello' or 'world', the command
-                print "hello world
-                will result in a string "hello world"
-            */
-            // if (temp.back() != '"')
-            // {
-            //     // Invalid quotes
-            //     std::cout << "Throw exception" << std::endl;
-            // }
         }
 
         if (line.size() > 0)
@@ -79,35 +62,56 @@ std::vector<Instruction*> parse(std::string line)
     std::deque<std::string> token_stream;
     std::stringstream stream(line);
     std::vector<Token> passed_args;
+    Instruction::OPERATOR function;
+    OPCODE opcode;
 
     std::string head_instruction = "";
     std::getline(stream, head_instruction, ' ');
 
+    passed_args = tokenize(stream);
     switch (opcode_map[head_instruction])
     {
-        case PRINT:
-            instructions.push_back(new Instruction(OPCODE::PRINT, print, print_args(stream)));
+        case FUNCTION::PRINT:
+            function = print;
+            opcode = OPCODE::PRINT;
+        break;
+
+        case FUNCTION::SET:
+            function = set;
+            opcode = OPCODE::NSET_VAR;
         break;
     }
 
+    instructions.push_back(new Instruction(opcode, function, passed_args));
     return instructions;
 }
 
 Token infer_type(std::string& obj)
 {
     // A map of regex and the referring type
-    static const std::array<std::pair<std::regex, Type>, 4> regex_type_map = {{
-        {std::regex("^\"([^\"]*)\"$"), T_STRING},
-        {std::regex("^[0-9]+$"), T_INTEGER},
-        {std::regex("^[0-9]+\\.[0-9]+$"), T_FLOAT},
-        {std::regex("^True$|^False$"), T_BOOLEAN}
+    static const std::array<std::pair<std::regex, TYPE>, 4> regex_type_map = {{
+        {std::regex("^\"([^\"]*)\"$"), TYPE::STRING},
+        {std::regex("^[0-9]+$"), TYPE::INTEGER},
+        {std::regex("^[0-9]+\\.[0-9]+$"), TYPE::FLOAT},
+        {std::regex("^True$|^False$"), TYPE::BOOLEAN}
     }};
-    Type obj_type = T_NULL;
+    // A map of strings and keyword definitions
+    static std::unordered_map<std::string, KEYWORD> keyword_map = {
+        {"const", KEYWORD::CONST}
+    };
+    TYPE obj_type = TYPE::NONE;
     std::smatch regex_match;
 
     Trim::trim_all(obj);
     
-    // Pass each regex to find a type
+    // First of all, is the string a keyword?
+    if (keyword_map.find(obj) != keyword_map.end())
+    {
+        std::cout << "Keyword: " << obj << std::endl;
+        return SyntaxToken(keyword_map[obj]);
+    }
+
+    // If not a keyword, try finding corresponding regex
     for (auto regex_pair : regex_type_map)
     {
         if (std::regex_search(obj, regex_match, regex_pair.first))
@@ -119,25 +123,25 @@ Token infer_type(std::string& obj)
 
     switch (obj_type)
     {
-        case T_STRING:
+        case TYPE::STRING:
             std::cout << "String" << std::endl;
             return String(regex_match[0]);
 
-        case T_INTEGER:
+        case TYPE::INTEGER:
             std::cout << "Integer" << std::endl;
             return Integer(std::stoi(regex_match[0]));
 
-        case T_FLOAT:
+        case TYPE::FLOAT:
             std::cout << "Float " << std::endl;
             return Float(std::stoi(regex_match[0]));
 
-        case T_BOOLEAN:
+        case TYPE::BOOLEAN:
             std::cout << "Boolean" << std::endl;
             return (obj == "True" ? Boolean(true) : Boolean(false));
 
         default:
-            std::cout << "Null" << std::endl;
-            return String("NULL");
+            std::cout << "None" << std::endl;
+            return String(obj);
     }
 }
 

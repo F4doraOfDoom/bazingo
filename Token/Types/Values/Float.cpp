@@ -4,6 +4,7 @@ Float::Float(double value)
 {
     _val = value;
     _str_val = std::to_string(value);
+    _token_type = TYPE::FLOAT;
 }
 
 std::string Float::value() const

@@ -50,6 +50,8 @@
                 "ratio": "cpp",
                 "thread": "cpp",
                 "cinttypes": "cpp",
-                "typeindex": "cpp"
+                "typeindex": "cpp",
+                "complex": "cpp",
+                "unordered_set": "cpp"
         }
 }

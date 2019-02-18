@@ -4,6 +4,7 @@ Integer::Integer(long long value)
 {
     _val = value;
     _str_val = std::to_string(value);
+    _token_type = TYPE::INTEGER;
 }
 
 std::string Integer::value() const

@@ -4,6 +4,7 @@ String::String(std::string value)
 {
     _val = value;
     _str_val = value;
+    _token_type = TYPE::STRING;
 }
 
 std::string String::value() const

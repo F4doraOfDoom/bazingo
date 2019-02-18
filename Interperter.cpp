@@ -6,7 +6,7 @@ int main()
 
     std::cout << "Bazingo Interpeter version 0.01 (Mor Gal and Jonathan Uklisty)" << std::endl;
 
-    while (user_input != "quit()")
+    while (user_input != "Quit")
     {
         std::cout << ">>> ";
         std::getline(std::cin, user_input);

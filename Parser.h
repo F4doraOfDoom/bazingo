@@ -14,37 +14,45 @@
 #include "Variables.h"
 #include "Instruction.h"
 #include "Token/Token.h"
-#include "Operators/print.h"
+#include "Operators/print/print.h"
+#include "Operators/set/set.h"
 #include "Token/Types/Values/Integer.h"
 #include "Token/Types/Values/String.h"
 #include "Token/Types/Values/Float.h"
 #include "Token/Types/Values/Boolean.h"
 #include "Token/Syntax/SyntaxToken.h"
 
-enum Type : uint_least8_t
+enum class FUNCTION : uint_least8_t
 {
-    T_STRING,
-    T_INTEGER,
-    T_FLOAT,
-    T_BOOLEAN,
-    T_NULL
+    // Uses the print function
+    PRINT,
+    // Uses the set function
+    SET
 };
 
 // A map that helps translate head instructions to opcodes
-extern std::map<std::string, OPCODE> opcode_map;
+extern std::map<std::string, FUNCTION> opcode_map;
 
 // Name space for different functions regarding parsing arguments for different operators
 namespace Parse
 {
     /*
-        This function parses the arguments for a string
+        This function passes the strings in th given stream and produces a vector of tokens
         Input:
             std::stringstream& stream - stream of strings (to be parsed as tokens)
         Output:
             Instruction::ARGS - A vector of tokens
     */
-    Instruction::ARGS print_args(std::stringstream& stream);
+    Instruction::ARGS tokenize(std::stringstream& stream);
 
+    /*
+        This function is used to get the type of a Token.
+        It works by using Regex Evaluation to check what sort of Token the string given belongs to
+        Input:
+            std::string - a string that needs to be evaulated as a Token
+        Output:
+            Token* - the inferred type of that string
+    */
     Token* infer_type(std::string);
 }
 

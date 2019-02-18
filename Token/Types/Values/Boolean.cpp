@@ -4,6 +4,7 @@ Boolean::Boolean(bool value)
 {
     _val = value;
     _str_val = _val ? "True" : "False";
+    _token_type = TYPE::BOOLEAN;
 }
 
 std::string Boolean::value() const

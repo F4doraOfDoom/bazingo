@@ -1,6 +1,6 @@
 #include "SyntaxToken.h"
 
-SyntaxToken::SyntaxToken(SYNTAX_TOKENS type)
+SyntaxToken::SyntaxToken(KEYWORD type)
 {
     _token_type = type;
 }
@@ -10,7 +10,7 @@ SyntaxToken::~SyntaxToken()
     // pass
 }
 
-SYNTAX_TOKENS SyntaxToken::type()
+KEYWORD SyntaxToken::keyword()
 {
     return _token_type;
 }
