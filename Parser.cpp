@@ -2,8 +2,11 @@
 
 // Initialize the opcode_map
 std::map<std::string, OPCODE> opcode_map = {
-    {"print", PRINT}
+    {"print", OPCODE::PRINT}
 };
+
+// Declare program_variables locally
+std::unordered_map<std::string, Value*> program_variables;
 
 Instruction::Instruction(OPCODE opcode, OPERATOR function, ARGS args)
 {
@@ -93,10 +96,10 @@ std::vector<Instruction*> parse(std::string line)
 Token infer_type(std::string& obj)
 {
     // A map of regex and the referring type
-    static const std::array<std::pair<std::regex, Type>, 3> regex_type_map = {{
+    static const std::array<std::pair<std::regex, Type>, 4> regex_type_map = {{
         {std::regex("^\"([^\"]*)\"$"), T_STRING},
         {std::regex("^[0-9]+$"), T_INTEGER},
-        {std::regex("^[0-9]+\.[0-9]+$"), T_FLOAT},
+        {std::regex("^[0-9]+\\.[0-9]+$"), T_FLOAT},
         {std::regex("^True$|^False$"), T_BOOLEAN}
     }};
     Type obj_type = T_NULL;
@@ -126,7 +129,8 @@ Token infer_type(std::string& obj)
 
         case T_FLOAT:
             std::cout << "Float " << std::endl;
-            return Integer(std::stoi(regex_match[0]));
+            return Float(std::stoi(regex_match[0]));
+
         case T_BOOLEAN:
             std::cout << "Boolean" << std::endl;
             return (obj == "True" ? Boolean(true) : Boolean(false));

@@ -11,6 +11,7 @@
 #include <deque>
 #include <map>
 
+#include "Variables.h"
 #include "Instruction.h"
 #include "Token/Token.h"
 #include "Operators/print.h"
@@ -18,6 +19,7 @@
 #include "Token/Types/Values/String.h"
 #include "Token/Types/Values/Float.h"
 #include "Token/Types/Values/Boolean.h"
+#include "Token/Syntax/SyntaxToken.h"
 
 enum Type : uint_least8_t
 {

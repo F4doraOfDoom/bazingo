@@ -13,7 +13,9 @@ enum OPCODE : uint_least8_t
     // Change a new variable
     CSET_VAR,
     // Print
-    PRINT
+    PRINT,
+    // Set varibles or constant
+    SET
 };
 
 /*
