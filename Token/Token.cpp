@@ -3,7 +3,7 @@
 Token::Token()
 {
     _str_val = "Token";
-    _token_type = TYPE::NONE;
+    _token_type = TOKEN_TYPE::TOKEN;
 }
 
 Token::~Token()
@@ -17,7 +17,7 @@ std::ostream& operator <<(std::ostream& s, const Token& t)
     return s;
 }
 
-TYPE Token::type()
+TOKEN_TYPE Token::type()
 {
     return _token_type;
 }

@@ -89,17 +89,18 @@ std::vector<Instruction*> parse(std::string line)
 Token infer_type(std::string& obj)
 {
     // A map of regex and the referring type
-    static const std::array<std::pair<std::regex, TYPE>, 4> regex_type_map = {{
-        {std::regex("^\"([^\"]*)\"$"), TYPE::STRING},
-        {std::regex("^[0-9]+$"), TYPE::INTEGER},
-        {std::regex("^[0-9]+\\.[0-9]+$"), TYPE::FLOAT},
-        {std::regex("^True$|^False$"), TYPE::BOOLEAN}
+    static const std::array<std::pair<std::regex, VALUE_TYPE>, 4> regex_type_map = {{
+        {std::regex("^\"([^\"]*)\"$"), VALUE_TYPE::STRING},
+        {std::regex("^[0-9]+$"), VALUE_TYPE::INTEGER},
+        {std::regex("^[0-9]+\\.[0-9]+$"), VALUE_TYPE::FLOAT},
+        {std::regex("^True$|^False$"), VALUE_TYPE::BOOLEAN}
     }};
     // A map of strings and keyword definitions
     static std::unordered_map<std::string, KEYWORD> keyword_map = {
         {"const", KEYWORD::CONST}
     };
-    TYPE obj_type = TYPE::NONE;
+    static const std::regex var_name("^[a-zA-Z]([_a-zA-Z\\d]+)?$");
+    VALUE_TYPE obj_type = VALUE_TYPE::NONE;
     std::smatch regex_match;
 
     Trim::trim_all(obj);
@@ -123,25 +124,29 @@ Token infer_type(std::string& obj)
 
     switch (obj_type)
     {
-        case TYPE::STRING:
-            std::cout << "String" << std::endl;
+        case VALUE_TYPE::STRING:
+            //std::cout << "String" << std::endl;
             return String(regex_match[0]);
 
-        case TYPE::INTEGER:
-            std::cout << "Integer" << std::endl;
+        case VALUE_TYPE::INTEGER:
+            //std::cout << "Integer" << std::endl;
             return Integer(std::stoi(regex_match[0]));
 
-        case TYPE::FLOAT:
-            std::cout << "Float " << std::endl;
+        case VALUE_TYPE::FLOAT:
+            //std::cout << "Float " << std::endl;
             return Float(std::stoi(regex_match[0]));
 
-        case TYPE::BOOLEAN:
-            std::cout << "Boolean" << std::endl;
+        case VALUE_TYPE::BOOLEAN:
+            //std::cout << "Boolean" << std::endl;
             return (obj == "True" ? Boolean(true) : Boolean(false));
 
         default:
-            std::cout << "None" << std::endl;
-            return String(obj);
+            if (std::regex_match(obj, var_name))
+            {
+                return String(obj);
+            }
+            //std::cout << "None" << std::endl;
+            return String("None");
     }
 }
 

@@ -5,6 +5,7 @@
 #include "../../Token/Token.h"
 #include "../../Instruction.h"
 #include "../../Variables.h"
+#include "../../Token/Syntax/SyntaxToken.h"
 
 /*
     This function sets variables and constants

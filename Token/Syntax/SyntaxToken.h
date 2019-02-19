@@ -41,7 +41,7 @@ public:
     KEYWORD keyword();
 
 private:
-    KEYWORD _token_type;
+    KEYWORD _keyword_type;
 };
 
 #endif // SYNTAX_TOKEN_H_

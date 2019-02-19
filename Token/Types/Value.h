@@ -3,6 +3,16 @@
 
 #include "../Token.h"
 
+// This enum represents all the types of values
+enum class VALUE_TYPE : uint_least8_t
+{
+    STRING,
+    INTEGER,
+    FLOAT,
+    BOOLEAN,
+    NONE,
+};
+
 class Value : public Token
 {
 public:

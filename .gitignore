@@ -52,3 +52,7 @@ Mkfile.old
 dkms.conf
 
 *.yml
+
+# debuggers
+.gdb_history
+peda*.txt

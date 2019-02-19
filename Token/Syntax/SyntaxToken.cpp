@@ -2,7 +2,9 @@
 
 SyntaxToken::SyntaxToken(KEYWORD type)
 {
-    _token_type = type;
+    _token_type = TOKEN_TYPE::KEYWORD;
+    _keyword_type = type;
+    _str_val = "Keyword";
 }
 
 SyntaxToken::~SyntaxToken()
@@ -12,5 +14,5 @@ SyntaxToken::~SyntaxToken()
 
 KEYWORD SyntaxToken::keyword()
 {
-    return _token_type;
+    return _keyword_type;
 }
