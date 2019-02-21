@@ -1,4 +1,4 @@
-#include "Parser.h"
+#include "Parser.hpp"
 
 // Initialize the opcode_map
 std::map<std::string, FUNCTION> opcode_map = {
@@ -48,7 +48,7 @@ Instruction::ARGS tokenize(std::stringstream& stream)
 
         if (line.size() > 0)
         {
-            //std::cout << line;
+            // std::cout << line;
             args.push_back(infer_type(line));
         }
     }
@@ -103,12 +103,12 @@ Token infer_type(std::string& obj)
     VALUE_TYPE obj_type = VALUE_TYPE::NONE;
     std::smatch regex_match;
 
-    Trim::trim_all(obj);
+    Trim::all(obj);
     
     // First of all, is the string a keyword?
     if (keyword_map.find(obj) != keyword_map.end())
     {
-        std::cout << "Keyword: " << obj << std::endl;
+        //std::cout << "Keyword: " << obj << std::endl;
         return SyntaxToken(keyword_map[obj]);
     }
 
@@ -141,30 +141,32 @@ Token infer_type(std::string& obj)
             return (obj == "True" ? Boolean(true) : Boolean(false));
 
         default:
+            // Is the token a valid variable name?
             if (std::regex_match(obj, var_name))
             {
-                return String(obj);
+                return Name(obj);
             }
-            //std::cout << "None" << std::endl;
+
+            // None of the above, should raise an exception
             return String("None");
     }
 }
 
 
-void Trim::trim_left(std::string &s) 
+void Trim::left(std::string &s) 
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
             std::not1(std::ptr_fun<int, int>(std::isspace))));
 }
 
-void Trim::trim_right(std::string &s) 
+void Trim::right(std::string &s) 
 {
     s.erase(std::find_if(s.rbegin(), s.rend(),
             std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
 }
 
-void Trim::trim_all(std::string &s) 
+void Trim::all(std::string &s) 
 {
-    trim_left(s);
-    trim_left(s);
+    left(s);
+    left(s);
 }

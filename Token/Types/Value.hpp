@@ -1,7 +1,7 @@
 #ifndef VALUE_H_
 #define VALUE_H_
 
-#include "../Token.h"
+#include "../Token.hpp"
 
 // This enum represents all the types of values
 enum class VALUE_TYPE : uint_least8_t

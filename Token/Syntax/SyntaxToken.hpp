@@ -1,7 +1,7 @@
 #ifndef SYNTAX_TOKEN_H_
 #define SYNTAX_TOKEN_H_
 
-#include "../Token.h"
+#include "../Token.hpp"
 
 /*
     This enum shall define all the types of the syntaxic tokens in the language

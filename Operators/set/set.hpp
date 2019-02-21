@@ -2,10 +2,11 @@
 #define SET_H_
 
 #include <iostream>
-#include "../../Token/Token.h"
-#include "../../Instruction.h"
-#include "../../Variables.h"
-#include "../../Token/Syntax/SyntaxToken.h"
+#include "../../Token/Token.hpp"
+#include "../../Instruction.hpp"
+#include "../../Variables.hpp"
+#include "../../Token/Syntax/SyntaxToken.hpp"
+#include "../../Token/Name/Name.hpp"
 
 /*
     This function sets variables and constants

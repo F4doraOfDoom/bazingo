@@ -1,7 +1,7 @@
 #ifndef INTEGER_H_
 #define INTEGER_H_
 
-#include "../Value.h"
+#include "../Value.hpp"
 
 class Integer : public Value
 {

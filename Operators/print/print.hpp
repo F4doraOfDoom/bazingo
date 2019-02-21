@@ -2,8 +2,8 @@
 #define PRINT_H_
 
 #include <iostream>
-#include "../../Token/Token.h"
-#include "../../Instruction.h"
+#include "../../Token/Token.hpp"
+#include "../../Instruction.hpp"
 
 /*
     This function represents the print operator

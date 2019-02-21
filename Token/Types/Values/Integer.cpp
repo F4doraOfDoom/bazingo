@@ -1,4 +1,4 @@
-#include "Integer.h"
+#include "Integer.hpp"
 
 Integer::Integer(long long value)
 {

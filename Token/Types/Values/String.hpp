@@ -1,7 +1,7 @@
 #ifndef STRING_H_
 #define STRING_H_
 
-#include "../Value.h"
+#include "../Value.hpp"
 
 class String : public Value
 {

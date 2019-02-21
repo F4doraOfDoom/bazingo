@@ -1,7 +1,7 @@
 #ifndef BOOLEAN_H_
 #define BOOLEAN_H_
 
-#include "../Value.h"
+#include "../Value.hpp"
 
 class Boolean : public Value
 {

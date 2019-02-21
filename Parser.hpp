@@ -11,16 +11,17 @@
 #include <deque>
 #include <map>
 
-#include "Variables.h"
-#include "Instruction.h"
-#include "Token/Token.h"
-#include "Operators/print/print.h"
-#include "Operators/set/set.h"
-#include "Token/Types/Values/Integer.h"
-#include "Token/Types/Values/String.h"
-#include "Token/Types/Values/Float.h"
-#include "Token/Types/Values/Boolean.h"
-#include "Token/Syntax/SyntaxToken.h"
+#include "Variables.hpp"
+#include "Instruction.hpp"
+#include "Token/Token.hpp"
+#include "Operators/print/print.hpp"
+#include "Operators/set/set.hpp"
+#include "Token/Types/Values/Integer.hpp"
+#include "Token/Types/Values/String.hpp"
+#include "Token/Types/Values/Float.hpp"
+#include "Token/Types/Values/Boolean.hpp"
+#include "Token/Syntax/SyntaxToken.hpp"
+#include "Token/Name/Name.hpp"
 
 enum class FUNCTION : uint_least8_t
 {
@@ -60,13 +61,13 @@ namespace Parse
 namespace Trim
 {
     // Removes trailing whitespace from the left of a string
-    void trim_left(std::string &s);
+    void left(std::string &s);
 
     // Removes trailing whitespace from the right of a string
-    void trim_right(std::string &s);
+    void right(std::string &s);
 
     // Removes all trailing whitespace from a string
-    void trim_all(std::string &s);
+    void all(std::string &s);
 }
 
 Token infer_type(std::string&);

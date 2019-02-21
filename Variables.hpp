@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <string>
 
-#include "Token/Types/Value.h"
+#include "Token/Types/Value.hpp"
 
 // This global variable shall hold the variables present in the languange's user space
 extern std::unordered_map<std::string, Value*> program_variables;

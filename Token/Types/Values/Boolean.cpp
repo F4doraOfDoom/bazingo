@@ -1,4 +1,4 @@
-#include "Boolean.h"
+#include "Boolean.hpp"
 
 Boolean::Boolean(bool value)
 {

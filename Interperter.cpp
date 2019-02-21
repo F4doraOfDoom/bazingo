@@ -1,4 +1,4 @@
-#include "Parser.h"
+#include "Parser.hpp"
 
 int main()
 {
@@ -14,7 +14,11 @@ int main()
 
         for (auto instruction : instructions)
         {
-            instruction->function(instruction->args);
+            if (!instruction->function(instruction->args))
+            {
+                std::cout << "Instruction failed." << std::endl;
+            }
+            
             delete instruction;
         }
     }

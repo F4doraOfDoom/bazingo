@@ -9,6 +9,7 @@ enum class TOKEN_TYPE : uint_least8_t
     TOKEN,
     KEYWORD,
     VALUE,
+    NAME,
 };
 
 /*
