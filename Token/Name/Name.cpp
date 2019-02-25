@@ -4,7 +4,7 @@ Name::Name(std::string var_name)
 {
     _token_type = TOKEN_TYPE::NAME;
     _var_name = var_name;
-    _str_val = "Name";
+    _str_val = _var_name;
 }
 
 Name::~Name()

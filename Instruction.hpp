@@ -2,6 +2,7 @@
 #define INSTRUCTION_H_
 
 #include <vector>
+#include <memory>
 #include "Token/Token.hpp"
 
 enum class OPCODE : uint_least8_t
