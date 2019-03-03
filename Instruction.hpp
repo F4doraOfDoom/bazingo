@@ -27,7 +27,7 @@ enum class OPCODE : uint_least8_t
 */
 struct Instruction
 {
-    using ARGS = std::vector<Token>;
+    using ARGS = std::vector<std::shared_ptr<Token>>;
     using OPERATOR = bool (*)(ARGS); 
 
     Instruction(OPCODE, OPERATOR, ARGS);

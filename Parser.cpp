@@ -36,8 +36,9 @@ Instruction::ARGS tokenize(std::stringstream& stream)
 
         if (line.size() > 0)
         {
+            std::cout << "test\n";
             // std::cout << line;
-            args.push_back(infer_type(line));
+            args.push_back(std::shared_ptr<Token>(Parse::infer_type(line)));
         }
     }
 
@@ -46,11 +47,11 @@ Instruction::ARGS tokenize(std::stringstream& stream)
 
 std::vector<Instruction*> parse(std::string line)
 {
+    Instruction::OPERATOR function;
+    Instruction::ARGS passed_args;
     std::vector<Instruction*> instructions;
     std::deque<std::string> token_stream;
     std::stringstream stream(line);
-    std::vector<Token> passed_args;
-    Instruction::OPERATOR function;
     OPCODE opcode;
 
     std::string head_instruction = "";
@@ -74,7 +75,7 @@ std::vector<Instruction*> parse(std::string line)
     return instructions;
 }
 
-Token infer_type(std::string& obj)
+Token* Parse::infer_type(std::string obj)
 {
     // A map of regex and the referring type
     static const std::array<std::pair<std::regex, VALUE_TYPE>, 4> regex_type_map = {{
@@ -97,7 +98,7 @@ Token infer_type(std::string& obj)
     if (keyword_map.find(obj) != keyword_map.end())
     {
         //std::cout << "Keyword: " << obj << std::endl;
-        return SyntaxToken(keyword_map[obj]);
+        return new SyntaxToken(keyword_map[obj]);
     }
 
     // If not a keyword, try finding corresponding regex
@@ -114,29 +115,29 @@ Token infer_type(std::string& obj)
     {
         case VALUE_TYPE::STRING:
             //std::cout << "String" << std::endl;
-            return String(regex_match[0]);
+            return new String(regex_match[0]);
 
         case VALUE_TYPE::INTEGER:
             //std::cout << "Integer" << std::endl;
-            return Integer(std::stoi(regex_match[0]));
+            return new Integer(std::stoi(regex_match[0]));
 
         case VALUE_TYPE::FLOAT:
             //std::cout << "Float " << std::endl;
-            return Float(std::stoi(regex_match[0]));
+            return new Float(std::stoi(regex_match[0]));
 
         case VALUE_TYPE::BOOLEAN:
             //std::cout << "Boolean" << std::endl;
-            return (obj == "True" ? Boolean(true) : Boolean(false));
+            return (obj == "True" ? new Boolean(true) : new Boolean(false));
 
         default:
             // Is the token a valid variable name?
             if (std::regex_match(obj, var_name))
             {
-                return Name(obj);
+                return new Name(obj);
             }
 
             // None of the above, should raise an exception
-            return String("None");
+            return new String("None");
     }
 }
 

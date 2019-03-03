@@ -1,4 +1,4 @@
-#include "Token.h"
+#include "Token.hpp"
 
 Token::Token()
 {
@@ -25,4 +25,4 @@ TOKEN_TYPE Token::type()
 void Token::_print(std::ostream& s) const
 {
     s << _str_val;
-} 
+}

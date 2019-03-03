@@ -4,7 +4,7 @@ int main()
 {
     std::string user_input = "";
 
-    std::cout << "Bazingo Interpeter version 0.01 (Mor Gal and Jonathan Uklisty)" << std::endl;
+    std::cout << "Bazingo Interpeter version 0.01 (Mor Gal and Jonathan pUklisty)" << std::endl;
 
     while (user_input != "Quit")
     {

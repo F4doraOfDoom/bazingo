@@ -1,4 +1,4 @@
-#include "SyntaxToken.h"
+#include "SyntaxToken.hpp"
 
 SyntaxToken::SyntaxToken(KEYWORD type)
 {

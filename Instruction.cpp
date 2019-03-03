@@ -9,5 +9,5 @@ Instruction::Instruction(OPCODE opcode, OPERATOR function, ARGS args)
 
 Instruction::~Instruction()
 {
-    // pass
+    // Pass
 }

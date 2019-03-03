@@ -70,8 +70,6 @@ namespace Trim
     void all(std::string &s);
 }
 
-Token infer_type(std::string&);
-
 /*
     The point of the parser is to take a string of data, and turn that into an instruction.
     After we parse the whole file, we get a list of instructions, that we can then execute

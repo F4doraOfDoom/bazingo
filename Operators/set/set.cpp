@@ -9,7 +9,7 @@ bool set(Instruction::ARGS args)
 
     try
     {  
-        if (args.at(0).type() == TOKEN_TYPE::KEYWORD)
+        if (args.at(0)->type() == TOKEN_TYPE::KEYWORD)
         {
             // We already checked that args[0] is indeed a SyntaxToken, so a downward cast is safe
             SyntaxToken* syntax_token = (SyntaxToken*)&args[0];
@@ -17,21 +17,19 @@ bool set(Instruction::ARGS args)
             args.erase(args.begin());
         }
 
-        if (args.at(0).type() == TOKEN_TYPE::NAME)
+        if (args.at(0)->type() == TOKEN_TYPE::NAME)
         {
             new_name = ((Name*)&args.at(0))->name();
         }
 
-        switch (args.at(1).type())
+        switch (args.at(1)->type())
         {
             case TOKEN_TYPE::NAME:
                 given_name = (Name*)&args.at(1);
-                std::cout << set_const << new_name << given_name->name() << std::endl;
                 break;
 
             case TOKEN_TYPE::VALUE:
                 given_value = (Value*)&args.at(1);
-                std::cout << set_const << new_name << given_value->value() << std::endl;
                 break;
 
             default:
@@ -49,6 +47,20 @@ bool set(Instruction::ARGS args)
         std::cout << "Bad Alloc: " << e.what() << std::endl;
         return false;
     }
+
+    if (given_name)
+    {
+        std::cout << set_const << new_name << given_name->name() << std::endl;
+    }
+    else if (given_value)
+    {
+        std::cout << set_const << new_name << given_value->value() << std::endl;
+    }
+    else
+    {
+        std::cout << "An error occured" << std::endl;
+    }
+    
 
     return true;
 }
